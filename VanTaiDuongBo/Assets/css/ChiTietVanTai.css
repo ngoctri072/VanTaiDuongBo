@@ -1,0 +1,67 @@
+﻿body {
+    font-size: 15px !important;
+    color: black !important;
+}
+.content{
+    background-color: white !important;
+}
+.tieudeCap1 {
+    color: mediumblue  !important;
+}
+.content-wrapper {
+    background-color: white !important;
+}
+.thongbaokhongco{
+    color: orangered !important;
+}
+p, h4, div {
+    line-height: 28px !important;
+}
+.tieudeCap2{
+    margin-left: 20px !important;
+    font-weight: bold !important;
+}
+
+.doanmota {
+    margin-left: 20px !important;
+}
+.tieudeSoLieu {
+    margin-left: 5px !important;
+    color: blue !important;
+    font-weight: bold !important;
+}
+#accordionEx {
+    padding: 15px !important;
+}
+.tableChiTietCauTruc{
+    margin-right: 20px !important;
+}
+
+.iconawesome {
+    font-size: 20px !important;
+    margin-right: 5px !important;
+    color: chocolate !important;
+}
+.dataTables_filter {
+    float: right !important;
+    margin-right: 10px !important;
+}
+
+.dataTables_length {
+    float: right !important;
+}
+
+.paginate_button {
+    margin-left: 3px !important;
+    margin-right: 3px !important;
+}
+input[type=search] {
+    margin-left: 5px !important;
+}
+label{
+    font-weight: normal !important;
+}
+
+.MTitle{
+    display: none !important;
+}

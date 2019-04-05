@@ -1,0 +1,165 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<VanTaiDuongBo.Modules.VanTaiDuongBo.Models.SoLieuXe.SoLieuXePartialModel>>
+
+@{
+    int sttLoaiHinhXe = 1;
+
+    int TongSoXe = 0;
+}
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        if (TongSoXe == 0)
+        {
+            TongSoXe = item.TongSoXe;
+        }
+        int sttXe = 1;
+        //Thêm Modal khi click vào xem chi tiết 1 Loại hình
+        <div class="modal fade" id="solieuxe_@item.LoaiHinhXeID" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h6 class="modal-title classcanhgiua">
+                            <strong>DANH SÁCH XE LOẠI HÌNH: @item.LoaiHinhXe</strong>
+                        </h6>
+                        </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="10%" class="classcanhgiua">STT</th>
+                                    <th width="30%" class="classcanhgiua">Biển số</th>
+                                    <th width="20%" class="classcanhgiua">Số ghế</th>
+                                    <th width="20%" class="classcanhgiua">Số giường</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var xe in item.ListXe)
+                                {
+                                <tr>
+                                    <td class="classcanhgiua">@sttXe</td>
+                                    <td class="classcanhgiua">@xe.BienSoXe</td>
+                                    <td class="classcanhgiua">@xe.SoGhe</td>
+                                    <td class="classcanhgiua">@xe.SoGiuong</td>
+                                </tr>
+                                    sttXe = sttXe + 1;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <p class="tieudeSoLieu">Tính đến ngày @DateTime.Now.ToShortDateString(): @TongSoXe xe </p>
+
+    <p class="tieudeCap2">2.1. Chi tiết xe theo loại hình</p>
+    <table class="table table-bordered" style="border-collapse:collapse;" id="tableCollapseSoLieuXe">
+        <thead>
+            <tr>
+                <th width="10%" class="classcanhgiua">STT</th>
+                <th width="70%" class="classcanhgiua">Loại hình xe</th>
+                <th width="20%" class="classcanhgiua">Số lượng xe</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loaihinh in Model)
+            {
+                <tr data-toggle="modal" data-target="#solieuxe_@loaihinh.LoaiHinhXeID">
+                    <td class="classcanhgiua">@sttLoaiHinhXe</td>
+                    <td>@loaihinh.LoaiHinhXe</td>
+                    <td class="classcanhgiua">@loaihinh.SoXe</td>
+                </tr>
+                sttLoaiHinhXe = sttLoaiHinhXe + 1;
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <p> Không có dữ liệu </p>
+}
+<script>
+    $(document).ready(function () {
+        $("#tableCollapseSoLieuXe").DataTable({
+            pageLength: 25,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                { extend: 'copy' },
+
+                {
+
+                    extend: 'excel', title: 'Danh sách Số liệu xe',
+                    exportOptions: {
+                        columns: [0, 1]
+                    }
+                },
+                {
+                    extend: 'pdf', title: 'Danh sách Số liệu xe',
+                    exportOptions: {
+                        columns: [0, 1]
+                    }
+                },
+
+                {
+                    extend: 'print',
+                    title: "Danh sách Số liệu xe",
+                    exportOptions: {
+                        columns: [0, 1]
+                    },
+                    customize: function (win) {
+
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    },
+
+                }
+            ],
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ dòng mỗi trang",
+                "zeroRecords": "Không tìm thấy",
+                "info": "Hiển thị _PAGE_ trong _PAGES_ trang",
+                "infoEmpty": "Không có thông tin",
+                "infoFiltered": "(tìm thấy trong _MAX_ dữ liệu)",
+                "decimal": "",
+                "emptyTable": "Không tìm thấy dữ liệu",
+                "infoPostFix": "",
+                "thousands": ".",
+
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang thực hiện...",
+                "search": "Tìm kiếm",
+                "paginate": {
+                    "first": "Trang đầu",
+                    "last": "Trang cuối",
+                    "next": "Trang kế tiếp",
+                    "previous": "Trang trước"
+                },
+                "aria": {
+                    "sortAscending": ": Sắp xếp tăng dần",
+                    "sortDescending": ": Sắp xếp giảm dần"
+                },
+                "buttons": {
+                    "copy": "Sao chép",
+                    "excel": "Xuất Excel",
+                    "pdf": "Xuất PDF",
+                    "print": "In"
+                }
+            }
+
+        });
+    });
+
+</script>

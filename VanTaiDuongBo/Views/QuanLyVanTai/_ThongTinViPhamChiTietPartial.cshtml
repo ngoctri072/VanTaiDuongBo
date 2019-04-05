@@ -1,0 +1,271 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<VanTaiDuongBo.Modules.VanTaiDuongBo.Models.ThongTinViPham.ChiTietViPhamPartialModel>>
+
+@{
+    int sttLoaiHinh = 1;
+    int sttPhuongTien = 1;
+}
+
+<div id="collapseViPhamChiTiet">
+    <div class="card-body">
+        <table id="tableViPhamChiTiet" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th width="8%" class="classcanhgiua">STT</th>
+                    <th width="18%" class="classcanhgiua">Loại hình</th>
+                    <th width="30%" class="classcanhgiua">Hành vi</th>
+                    <th width="12%" class="classcanhgiua">Lần vi phạm</th>
+                    <th width="12%" class="classcanhgiua">Nhắc nhở</th>
+                    <th width="12%" class="classcanhgiua">Thu hồi</th>
+                    <th width="8%" class="classcanhgiua">Khác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var loaihinh in Model)
+                    {
+                        int solanNhacNho = 0;
+                        double phantramNhacNho = 0;
+
+                        int solanThuHoi = 0;
+                        double phantramThuHoi = 0;
+
+                        int solanKhac = 0;
+                        double phantramKhac = 0;
+
+                        if (loaihinh.hanhViXuLyViPhamModels != null)
+                        {
+                            foreach (var hanhvi in loaihinh.hanhViXuLyViPhamModels)
+                            {
+                                if (hanhvi.HinhThucXuLyID == 2)
+                                {
+                                    solanNhacNho = hanhvi.SoLanViPham.Value;
+                                }
+                                else
+                                {
+                                    if (hanhvi.HinhThucXuLyID == 3)
+                                    {
+                                        solanThuHoi = hanhvi.SoLanViPham.Value;
+                                    }
+                                    else
+                                    {
+                                        solanKhac = hanhvi.SoLanViPham.Value;
+                                    }
+                                }
+                            }
+                        }
+
+                        var keyModal = loaihinh.LoaiHinhXeID + loaihinh.ViPhamID;
+
+                        <tr data-toggle="modal" data-target="#viphamchitiet_@keyModal">
+                            @{
+                                phantramNhacNho = Math.Round(Convert.ToDouble((solanNhacNho * 100) / loaihinh.SoLanViPham), 1);
+                                phantramThuHoi = Math.Round(Convert.ToDouble(solanThuHoi * 100) / loaihinh.SoLanViPham.Value, 1);
+                                phantramKhac = 100 - (phantramNhacNho + phantramThuHoi);
+                            }
+
+                            <td hidden></td>
+                            <td class="classcanhgiua">@sttLoaiHinh</td>
+                            <td style="vertical-align: middle">@loaihinh.TenLoaiHinhXe</td>
+                            <td>@loaihinh.TenViPham</td>
+                            <td class="classcanhgiua">@loaihinh.SoLanViPham</td>
+                            <td class="classcanhgiua">@solanNhacNho - <strong>@phantramNhacNho%</strong></td>
+                            <td class="classcanhgiua">@solanThuHoi - <strong>@phantramThuHoi%</strong></td>
+                            <td class="classcanhgiua">@solanKhac - <strong>@phantramKhac%</strong></td>
+                        </tr>
+                        sttLoaiHinh = sttLoaiHinh + 1;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4">Không có dữ liệu xe vi phạm</td>
+                    </tr>
+                }
+            </tbody>
+
+            <tfoot>
+                @if (Model != null)
+                {
+                    bool checkSum = false;
+                    foreach (var item in Model)
+                    {
+                        if (checkSum == false)
+                        {
+                            <tr>
+                                <td colspan="4"><strong>Tổng lần vi phạm</strong></td>
+                                <td colspan="3" class="classcanhgiua"><strong>@item.TongLanViPham</strong></td>
+                            </tr>
+                            checkSum = true;
+                        }
+                    }
+                }
+            </tfoot>
+        </table>
+    </div>
+</div>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        var keyModal = item.LoaiHinhXeID + item.ViPhamID;
+        <!--Modal xem chi tiết danh sách xe 1 Loại hình kinh doanh-->
+        <div class="modal fade" id="viphamchitiet_@keyModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h6 class="modal-title" style="text-align: center">
+                            <strong>THÔNG TIN CHI TIẾT PHƯƠNG TIỆN VI PHẠM</strong>
+                        </h6>
+                    </div>
+                    <div class="modal-body">
+                        <table id="DanhSachXeDatatable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="8%" class="classcanhgiua">STT</th>
+                                    <th width="30%" class="classcanhgiua">Phương tiện</th>
+                                    <th width="20%" class="classcanhgiua">Tổng lần</th>
+                                    <th width="15%" class="classcanhgiua">Nhắc nhở</th>
+                                    <th width="15%" class="classcanhgiua">Thu hồi</th>
+                                    <th width="12%" class="classcanhgiua">Khác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var phuongtien in item.listPhuongTienModels)
+                                {
+                                    int solanNhacNho = 0;
+                                    int solanThuHoi = 0;
+                                    int solanKhac = 0;
+                                    if (phuongtien.listHanhViXuLyByXeModels != null)
+                                    {
+                                        foreach (var solan in phuongtien.listHanhViXuLyByXeModels)
+                                        {
+                                            if (solan.HinhThucXuLyID == 2)
+                                            {
+                                                solanNhacNho = solan.SoLanViPham.Value;
+                                            }
+                                            else
+                                            {
+                                                if (solan.HinhThucXuLyID == 3)
+                                                {
+                                                    solanThuHoi = solan.SoLanViPham.Value;
+                                                }
+                                                else
+                                                {
+                                                    solanKhac = solan.SoLanViPham.Value;
+                                                }
+
+                                            }
+                                        }
+                                    }
+
+                                    <tr>
+                                        <td class="classcanhgiua">@sttPhuongTien</td>
+                                        <td class="classcanhgiua">@phuongtien.BienSoXe</td>
+                                        <td class="classcanhgiua">@phuongtien.SoLanViPham</td>
+                                        <td class="classcanhgiua">@solanNhacNho</td>
+                                        <td class="classcanhgiua">@solanThuHoi</td>
+                                        <td class="classcanhgiua">@solanKhac</td>
+                                    </tr>
+                                    <tr class="chitietVanBan">
+                                        <td>Shit</td>
+                                    </tr>
+                                    sttPhuongTien = sttPhuongTien + 1;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<script>
+    $(document).ready(function () {
+        $(".chitietVanBan").hide();
+        //Phần Datatable Vi phạm chi tiết
+        $("#tableViPhamChiTiet").DataTable({
+            pageLength: 25,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                { extend: 'copy' },
+
+                {
+
+                    extend: 'excel', title: 'Danh sách Phương tiện vi phạm',
+                    exportOptions: {
+                        columns: [0, 1]
+                    }
+                },
+                {
+                    extend: 'pdf', title: 'Danh sách Phương tiện vi phạm',
+                    exportOptions: {
+                        columns: [0, 1]
+                    }
+                },
+
+                {
+                    extend: 'print',
+                    title: "Danh sách Phương tiện vi phạm",
+                    exportOptions: {
+                        columns: [0, 1]
+                    },
+                    customize: function (win) {
+
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    },
+
+                }
+            ],
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ dòng mỗi trang",
+                "zeroRecords": "Không tìm thấy",
+                "info": "Hiển thị _PAGE_ trong _PAGES_ trang",
+                "infoEmpty": "Không có thông tin",
+                "infoFiltered": "(tìm thấy trong _MAX_ dữ liệu)",
+                "decimal": "",
+                "emptyTable": "Không tìm thấy dữ liệu",
+                "infoPostFix": "",
+                "thousands": ".",
+
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang thực hiện...",
+                "search": "Tìm kiếm",
+                "paginate": {
+                    "first": "Trang đầu",
+                    "last": "Trang cuối",
+                    "next": "Trang kế tiếp",
+                    "previous": "Trang trước"
+                },
+                "aria": {
+                    "sortAscending": ": Sắp xếp tăng dần",
+                    "sortDescending": ": Sắp xếp giảm dần"
+                },
+                "buttons": {
+                    "copy": "Sao chép",
+                    "excel": "Xuất Excel",
+                    "pdf": "Xuất PDF",
+                    "print": "In"
+                }
+            }
+
+        });
+
+        $('#modalDSXeViPham').modal({
+            backdrop: 'static',
+            show: false
+        });
+    });
+</script>

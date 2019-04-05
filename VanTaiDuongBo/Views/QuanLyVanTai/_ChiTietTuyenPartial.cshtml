@@ -1,0 +1,166 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<VanTaiDuongBo.Modules.VanTaiDuongBo.Models.Tuyen_BenXe.TuyenBenXePartialModel>>
+
+@{
+    int sttBenXe = 1;
+    int sttTuyen = 1;
+}
+<p class="tieudeCap2">2.2. Chi tiết tuyến</p>
+<table class="table table-condensed table-bordered" style="border-collapse:collapse;" id="chitietTuyenKhoiBen">
+    <thead>
+        <tr>
+            <th width="10%" class="classcanhgiua">STT</th>
+            <th width="60%" class="classcanhgiua">Khối bến xe</th>
+            <th width="30%" class="classcanhgiua">Số lượng xe</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            int sttModal = 1;
+            foreach (var khoiben in Model)
+            {
+                <!--Kiểm tra dữ liệu truyền qua có null hay không-->
+                <tr data-toggle="modal" data-target="#@sttModal.ToString()_@khoiben.BenXeID.ToString()">
+                    <td class="classcanhgiua">@sttBenXe</td>
+                    <td>@khoiben.TenBenXe</td>
+                    <td class="text-success classcanhgiua">@khoiben.SoXeBenXe</td>
+                </tr>
+                sttBenXe = sttBenXe + 1;
+
+                sttModal = sttModal + 1;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3">Không có dữ liệu</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model != null)
+{
+    int sttModal = 1;
+    foreach (var item in Model)
+    {
+        <div class="modal fade" id="@sttModal.ToString()_@item.BenXeID.ToString()" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h6 class="modal-title classcanhgiua">
+                            <strong>DANH SÁCH TUYẾN CỦA BẾN XE: @item.TenBenXe</strong>
+                        </h6>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="10%" class="classcanhgiua">STT</th>
+                                    <th width="75%" class="classcanhgiua">Tên tuyến</th>
+                                    <th width="15%" class="classcanhgiua">Số lượng xe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (item.ListTuyen_ByBenXe != null)
+                                {
+                                    foreach (var tuyen in item.ListTuyen_ByBenXe)
+                                    {
+                                        <tr>
+                                            <td class="classcanhgiua">@sttTuyen</td>
+                                            <td>@tuyen.TenTuyen</td>
+                                            <td class="classcanhgiua">@tuyen.TongSoXe</td>
+                                        </tr>
+                                        sttTuyen = sttTuyen + 1;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<script>
+    $(document).ready(function () {
+        $("#chitietTuyenKhoiBen").DataTable({
+            pageLength: 25,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                { extend: 'copy' },
+
+                {
+
+                    extend: 'excel', title: 'Danh sách xe theo tuyến',
+                    exportOptions: {
+                        columns: [0, 1]
+                    }
+                },
+                {
+                    extend: 'pdf', title: 'Danh sách xe theo tuyến',
+                    exportOptions: {
+                        columns: [0, 1]
+                    }
+                },
+
+                {
+                    extend: 'print',
+                    title: "Danh sách xe theo tuyến",
+                    exportOptions: {
+                        columns: [0, 1]
+                    },
+                    customize: function (win) {
+
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    },
+
+                }
+            ],
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ dòng mỗi trang",
+                "zeroRecords": "Không tìm thấy",
+                "info": "Hiển thị _PAGE_ trong _PAGES_ trang",
+                "infoEmpty": "Không có thông tin",
+                "infoFiltered": "(tìm thấy trong _MAX_ dữ liệu)",
+                "decimal": "",
+                "emptyTable": "Không tìm thấy dữ liệu",
+                "infoPostFix": "",
+                "thousands": ".",
+
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang thực hiện...",
+                "search": "Tìm kiếm",
+                "paginate": {
+                    "first": "Trang đầu",
+                    "last": "Trang cuối",
+                    "next": "Trang kế tiếp",
+                    "previous": "Trang trước"
+                },
+                "aria": {
+                    "sortAscending": ": Sắp xếp tăng dần",
+                    "sortDescending": ": Sắp xếp giảm dần"
+                },
+                "buttons": {
+                    "copy": "Sao chép",
+                    "excel": "Xuất Excel",
+                    "pdf": "Xuất PDF",
+                    "print": "In"
+                }
+            }
+
+        });
+    });
+
+</script>

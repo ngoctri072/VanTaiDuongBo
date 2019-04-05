@@ -1,0 +1,139 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+@using VanTaiDuongBo.Modules.VanTaiDuongBo.Models;
+@using DotNetNuke.Collections
+@using DotNetNuke.Web.Mvc.Helpers;
+@using System.Web.Mvc;
+@using VanTaiDuongBo.Modules.VanTaiDuongBo.Models.ThongTinCoBan;
+@using VanTaiDuongBo.Modules.VanTaiDuongBo.Models.SoLieuXe;
+@using VanTaiDuongBo.Modules.VanTaiDuongBo.Models.Tuyen_BenXe;
+@using VanTaiDuongBo.Modules.VanTaiDuongBo.Models.ThongTinViPham;
+
+@{
+    ViewBag.Title = "Chi tiết đơn vị vận tải";
+    var DonViVanTaiID = ViewBag.DonViVanTaiID;
+
+    var thongtincobanList = (ThongTinCoBanVanTai)ViewBag.ThongTinCoBan;
+    var thongtinsolieuxeList = (IEnumerable<SoLieuXePartialModel>)ViewBag.ThongTinSoLieuXe;
+    var thongtinBenXe_TuyenList = (IEnumerable<TuyenBenXePartialModel>)ViewBag.ThongTinTuyen;
+
+    var thongtinviphamchung = (IEnumerable<ThongTinViPhamPartialModel>)ViewBag.ThongTinViPhamChung;
+    var thongtinviphamchitiet = (IEnumerable<ChiTietViPhamPartialModel>)ViewBag.ThongTinViPhamChiTiet;
+}
+<!--Phần Content nội dung các Partial View-->
+<div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+    <!-- ===========PHẦN PARTIAL THÔNG TIN CƠ BẢN============= -->
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header" role="tab" id="headingOne1">
+            <a class="tieudeChiTiet" id="loaihinhkinhdoanhClick" href="#">
+                <h6 class="mb-0">
+                    <i class="fa fa-address-card iconawesome"></i><strong class="tieudeCap1">1- Loại hình kinh doanh vận tải: </strong>
+                </h6>
+            </a>
+        </div>
+        @Html.Partial("_ThongTinCoBanPartial", thongtincobanList)
+    </div>
+    <!-- ========= HẾT PHẦN PARTIALTHÔNG TIN CƠ BẢN=========== -->
+    <!-- ===========PHẦN PARTIAL SỐ LIỆU XE ============ -->
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header" role="tab" id="headingTwo2">
+            <a href="#" id="solieuxeClick">
+                <h6 class="mb-0">
+                    <i class="fa fa-car iconawesome"></i><strong class="tieudeCap1">2- Số liệu xe:</strong>
+                </h6>
+            </a>
+        </div>
+        <!-- Card body -->
+        <div id="solieuxeDiv" class="collapse">
+            <div class="card-body">
+                @Html.Partial("_SoLieuXePartial", thongtinsolieuxeList)
+
+                @Html.Partial("_ChiTietTuyenPartial", thongtinBenXe_TuyenList)
+            </div>
+        </div>
+        <!-- Accordion card -->
+    </div>
+    <!-- ==========HẾT PHẦN PARTIAL SỐ LIỆU XE========== -->
+    <!-- ===========PHẦN PARTIAL THÔNG TIN VI PHẠM===== -->
+    <div class="divthongtinviphamPartial">
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="headingThree3">
+                <a class="tieudeChiTiet" id="thongtinviphamClick" href="#">
+                    <h6 class="mb-0">
+                        <i class="fa fa-exclamation-triangle iconawesome"></i>
+                        <strong class="tieudeCap1">3- Thông tin vi phạm:</strong>
+                    </h6>
+                </a>
+            </div>
+            <!-- Card body -->
+            <div id="divThongTinViPham" class="collapse">
+                <div class="card-body">
+                    <!-- Accordion card -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header" role="tab" id="headingViPhamChung">
+                            <a href="#" class="tieudeChiTiet" id="ThongTinViPhamChungClick">
+                                <p class="tieudeCap2">3.1. Thông tin chung</p>
+                            </a>
+                        </div>
+                        <div id="divThongTinViPhamChung" class="collapse">
+                            @Html.Partial("_ThongTinViPhamChungPartial", thongtinviphamchung)
+                        </div>
+                        </div>
+                    <!-- Accordion card -->
+                    <!-- Accordion card -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header" role="tab" id="headingViPhamChiTiet">
+                            <a href="#" class="tieudeChiTiet" id="ThongTinViPhamChiTietClick">
+                                <p class="tieudeCap2">3.2. Thông tin chi tiết theo Loại hình kinh doanh</p>
+                            </a>
+                        </div>
+                        <div id="divThongTinViPhamChiTiet" class="collapse">
+                            @Html.Partial("_ThongTinViPhamChiTietPartial", thongtinviphamchitiet)
+                        </div>
+                        </div>
+                    <!-- Accordion card -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--=========HẾT PHẦN PARTIAL THÔNG TIN VI PHẠM====-->
+</div>
+<!-- Hết phần Content nội dung -->
+<script>
+    $(document).ready(function () {
+        $("#chitietLoaiHinhVanTai").collapse('show');
+
+        $("#loaihinhkinhdoanhClick").click(function () {
+            $("#chitietLoaiHinhVanTai").collapse('toggle');
+        });
+
+        //$("#divThongTinViPham").collapse('toggle');
+
+        $("#thongtinviphamClick").click(function () {
+            $("#divThongTinViPham").collapse('toggle');
+        });
+
+        //$("#divThongTinViPhamChung").collapse('toggle');
+
+        $("#ThongTinViPhamChungClick").click(function () {
+            $("#divThongTinViPhamChung").collapse('toggle');
+        });
+
+        //$("#divThongTinViPhamChiTiet").collapse('toggle');
+
+        $("#ThongTinViPhamChiTietClick").click(function () {
+            $("#divThongTinViPhamChiTiet").collapse('toggle');
+        });
+
+        //$("#solieuxeDiv").collapse('toggle');
+
+        $("#solieuxeClick").click(function () {
+            $("#solieuxeDiv").collapse('toggle');
+        });
+    });
+</script>

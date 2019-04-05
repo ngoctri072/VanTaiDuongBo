@@ -1,0 +1,182 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<VanTaiDuongBo.Modules.VanTaiDuongBo.Models.ThongTinViPham.ThongTinViPhamPartialModel>>
+
+@{
+    int sttHanhVi = 1;
+}
+<div id="collapseViPhamChung">
+    <div class="card-body">
+        <table class="table table-bordered" id="tableThongTinViPhamChung">
+            <thead>
+                <tr>
+                    <th style="width: 5% !important" class="classcanhgiua">STT</th>
+                    <th style="width: 40% !important"  class="classcanhgiua">Hành vi</th>
+                    <th style="width: 15% !important" class="classcanhgiua">Lần vi phạm</th>
+                    <th style="width: 15% !important" class="classcanhgiua">Số lần nhắc nhở</th>
+                    <th style="width: 15% !important" class="classcanhgiua">Số lần thu hồi</th>
+                    <th style="width: 10% !important" class="classcanhgiua">Khác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var hanhvi in Model)
+                    {
+                        int solanNhacNho = 0;
+                        double phantramNhacNho = 0;
+
+                        int solanThuHoi = 0;
+                        double phantramThuHoi = 0;
+
+                        int khac = 0;
+                        double phantramKhac = 0;
+
+                        if (hanhvi.HanhViXuLyViPham != null)
+                        {
+                            foreach (var chitietxuly in hanhvi.HanhViXuLyViPham)
+                            {
+                                if (chitietxuly.HinhThucXuLyID == 2)
+                                {
+                                    solanNhacNho = chitietxuly.SoLanViPham.Value;
+                                }
+                                else
+                                {
+                                    if (chitietxuly.HinhThucXuLyID == 3)
+                                    {
+                                        solanThuHoi = chitietxuly.SoLanViPham.Value;
+                                    }
+                                    else
+                                    {
+                                        khac = chitietxuly.SoLanViPham.Value;
+                                    }
+
+                                }
+                            }
+                        }
+
+                        <tr>
+                            @{ 
+                                phantramNhacNho = Math.Round(Convert.ToDouble((solanNhacNho * 100) / hanhvi.SoLanViPham),1);
+                                phantramThuHoi = Math.Round(Convert.ToDouble(solanThuHoi * 100) / hanhvi.SoLanViPham.Value, 1);
+                                phantramKhac = 100 - (phantramNhacNho + phantramThuHoi);
+                            }
+
+                            <td class="classcanhgiua">@sttHanhVi</td>
+                            <td>@hanhvi.TenViPham</td>
+                            <td class="classcanhgiua">@hanhvi.SoLanViPham</td>
+                            <td class="classcanhgiua">@solanNhacNho - <strong>@phantramNhacNho%</strong></td>
+                            <td class="classcanhgiua">@solanThuHoi - <strong>@phantramThuHoi%</strong></td>
+                            <td class="classcanhgiua">@khac - <strong>@phantramKhac%</strong></td>
+                        </tr>
+                        sttHanhVi = sttHanhVi + 1;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3">Không có dữ liệu vi phạm</td>
+                    </tr>
+                }
+            </tbody>
+
+            <tfoot>
+                @if (Model != null)
+                {
+                    bool checkSum = false;
+                    foreach (var item in Model)
+                    {
+                        if (checkSum == false)
+                        {
+                            <tr>
+                                <td colspan="3"><strong>Tổng vi phạm</strong></td>
+                                <td colspan="3" class="classcanhgiua"><strong>@item.TongLanViPham</strong></td>
+                            </tr>
+                        }
+                    }
+                }
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#tableThongTinViPhamChung").DataTable({
+            pageLength: 25,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                { extend: 'copy' },
+
+                {
+
+                    extend: 'excel', title: 'Danh sách Vi phạm',
+                    exportOptions: {
+                        columns: [0, 1]
+                    }
+                },
+                {
+                    extend: 'pdf', title: 'Danh sách Vi phạm',
+                    exportOptions: {
+                        columns: [0, 1]
+                    }
+                },
+
+                {
+                    extend: 'print',
+                    title: "Danh sách Vi phạm",
+                    exportOptions: {
+                        columns: [0, 1]
+                    },
+                    customize: function (win) {
+
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    },
+
+                }
+            ],
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ dòng mỗi trang",
+                "zeroRecords": "Không tìm thấy",
+                "info": "Hiển thị _PAGE_ trong _PAGES_ trang",
+                "infoEmpty": "Không có thông tin",
+                "infoFiltered": "(tìm thấy trong _MAX_ dữ liệu)",
+                "decimal": "",
+                "emptyTable": "Không tìm thấy dữ liệu",
+                "infoPostFix": "",
+                "thousands": ".",
+
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang thực hiện...",
+                "search": "Tìm kiếm",
+                "paginate": {
+                    "first": "Trang đầu",
+                    "last": "Trang cuối",
+                    "next": "Trang kế tiếp",
+                    "previous": "Trang trước"
+                },
+                "aria": {
+                    "sortAscending": ": Sắp xếp tăng dần",
+                    "sortDescending": ": Sắp xếp giảm dần"
+                },
+                "buttons": {
+                    "copy": "Sao chép",
+                    "excel": "Xuất Excel",
+                    "pdf": "Xuất PDF",
+                    "print": "In"
+                }
+            }
+
+        });
+
+        $('#modalDSXeViPham').modal({
+            backdrop: 'static',
+            show: false
+        });
+    });
+</script>

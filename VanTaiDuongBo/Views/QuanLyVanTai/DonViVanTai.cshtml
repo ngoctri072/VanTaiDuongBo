@@ -1,0 +1,559 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+@using VanTaiDuongBo.Modules.VanTaiDuongBo.Models
+@using DotNetNuke.Web.Client.ClientResourceManagement
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/desktopmodules/mvc/VanTaiDuongBo/Views/Shared/_Layout.cshtml";
+    IEnumerable<DonViVanTaiModel> listDonVi = ViewBag.DonViResult;
+}
+<!--===============Phần các input để call trong Javascript===============-->
+@*@{
+    ClientResourceManager.RegisterScript(Dnn.DnnPage, "~/desktopmodules/mvc/VanTaiDuongBo/Assets/css/StyleVanTai.css");
+}*@
+
+<!--Phần input show tất cả đơn vị vận tải-->
+<input id="UrlGetData" value="@Url.Action("GetDataVanTai", "QuanLyVanTai")" hidden />
+<input id="checkShow" value="0" hidden />
+<input id="donvivantaiID" value="0" hidden />
+
+<!--Phần input load các combobox form tra cứu-->
+<input id="UrlLoaiHinhKinhDoanh" value="@Url.Action("GetDataLoaiHinhKinhDoanh", "QuanLyVanTai")" hidden />
+<input id="UrlDoanhNghiepVanTai" value="@Url.Action("GetDataDoanhNghiepVanTai", "QuanLyVanTai")" hidden />
+<input id="UrlLoaiHinhDoanhNghiep" value="@Url.Action("GetDataLoaiHinhDoanhNghiep", "QuanLyVanTai")" hidden />
+<input id="UrlQuanHuyen" value="@Url.Action("GetDataQuanHuyen", "QuanLyVanTai")" hidden />
+
+<!--Phần input show trang chi tiết đơn vị vận tải-->
+<input id="UrlChiTietVanTai" value="@Url.Action("ChiTietVanTai", "QuanLyVanTai", new { DonViVanTaiID = "__id__" })" hidden />
+
+<!--Phần khung tìm kiếm nâng cao-->
+<div class="">
+    <a class="btn btn-primary" onclick="ShowTimKiemNangCao()">
+        Tìm kiếm nâng cao
+    </a>
+    <div id="formTimKiem">
+        <div id="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-content">
+                            <form method="get">
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-5 labelForm" style="font-weight: normal; margin-top: 8px;">
+                                            Số giấy phép
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input class="form-control" autocomplete="off" placeholder="Nhập số giấy phép..." type="text" id="sogiayphep" style="width: 100%;" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Số biên nhận</span>
+                                        </div>
+                                        <div class="col col-sm-7">
+                                            <input class="form-control" autocomplete="off" type="text" id="sobiennhan" name="sobiennhan" style="width: 100%;" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Loại hình kinh doanh</span>
+                                        </div>
+                                        <div class="col col-sm-7">
+                                            <div id="loaihinhKD"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Ngày cấp từ</span>
+                                        </div>
+                                        <div class="col col-sm-7">
+                                            <div id="ngaycaptu"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Đến ngày</span>
+                                        </div>
+                                        <div class="col col-sm-7">
+                                            <div id="ngaycapdenngay"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Thời hạn từ </span>
+                                        </div>
+                                        <div class="col col-sm-7">
+                                            <div id="thoihantu"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Đến ngày</span>
+                                        </div>
+                                        <div class="col col-sm-7">
+                                            <div id="handenngay"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Ngày sinh</span>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div id="ngaysinh"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Người điều hành</span>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <input placeholder="Nhập họ tên Người điều hành" class="form-control" autocomplete="off" type="text" name="nguoidieuhanh" id="nguoidieuhanh" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Thu hồi giấy phép</span>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <input type="checkbox" id="toggle-two">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Loại hình doanh nghiệp</span>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div id="loaihinhDoanhNghiep"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span>Giấy phép hiện hành</span>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <input type="checkbox" id="toggle-giayphep">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col col-sm-5 labelForm">
+                                            <span> Quận / Huyện</span>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div id="quanhuyen"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Phần button Tìm kiếm-->
+            <div class="buttonTimKiem">
+                <button type="button" class="btn btn-outline-danger">Tìm kiếm</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="gridContainer" style="height: 400px !important;"></div>
+
+<script>
+    var ListData = [];
+
+    $(function () {
+        $('#toggle-two').bootstrapToggle({
+            on: 'Hoạt động',
+            off: 'Thu hồi'
+        });
+
+        $('#toggle-giayphep').bootstrapToggle({
+            on: 'Hoạt động',
+            off: 'Khóa'
+        });
+    });
+
+    $(document).ready(function () {
+        $("#formTimKiem").hide();
+        $("#dnn_ctr1287_dnnTITLE_titleLabel").hide();
+        LoadListData();
+
+        //Load các combobox phần form tra cứu
+        GETSelectLoaiHinhKD();
+        GETSelectLoaiHinhDoanhNghiep();
+        GETSelectQuanHuyen();
+    });
+
+    async function LoadListData() {
+        ListData = new DevExpress.data.CustomStore({
+            load: function (loadOptions) {
+                var deferred = $.Deferred();
+                BinDataPageSize((loadOptions.skip / loadOptions.take) + 1, loadOptions.take || 10, deferred);
+                return deferred.promise();
+            },
+            update: function (key, values) {
+                return 'update';
+            },
+            insert: function (values) {
+                return 'insert';
+            },
+            remove: function (key) {
+                return 'remove';
+            }
+        });
+        BinThongTin();
+    };
+
+    async function BinDataPageSize(PageNumber, PageSize, deferred) {
+        //Phần khai báo const sử dụng
+        //const urlGetDataVanTai = '/DesktopModules/MVC/VanTaiDuongBo/QuanLyVanTai/GetDataVanTai';
+        const Keytoken = $("input[name='__RequestVerificationToken']").val();
+
+        var thongtin = {
+            "Index": PageNumber,
+            "pageSize": PageSize
+        };
+        var ajaxCall = await $.ajax({
+            type: 'POST',
+            url: $("#UrlGetData").val(),
+            contentType: "application/x-www-form-urlencoded",
+            //contentType: "application/json;charset=utf-8",
+            dataType: "text",
+            headers: {
+                "ModuleId": @Dnn.ModuleContext.ModuleId,
+                "TabId": @Dnn.ModuleContext.TabId,
+            },
+            data: thongtin,
+        });
+        debugger
+
+        try {
+            var dnnViewResp = ajaxCall;
+            dnnViewResp = dnnViewResp.substring(0, dnnViewResp.indexOf("<!DOCTYPE html>"));
+            var data = JSON.parse(dnnViewResp);
+            debugger
+            //var data = ajaxCall.Result;
+            if (data != null && data.length > 0) {
+                var a = data[0];
+                deferred.resolve(data, { totalCount: data[0].TotalCount });
+                console.log(a);
+                debugger
+            }
+            else {
+                deferred.resolve(null, { totalCount: 0 });
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    };
+    debugger
+
+    async function BinThongTin() {
+        var page_ktra = [5, 10, 20, 50, 100];
+        var _grid = $("#gridContainer").dxDataGrid({
+            dataSource: ListData,
+            Export: {
+                enable: true,
+                allowExportSelectedData: true
+            },
+            showBorders: true,
+            remoteOperations: {
+                sorting: true,
+                paging: true
+            },
+            paging: {
+                pageSize: 10
+            },
+            pager: {
+                showPageSizeSelector: true,
+                allowedPageSizes: page_ktra,
+                showInfo: true,
+                infoText: 'Tổng số {2} dòng /{1} trang'
+            },
+            columns: [
+                {
+                    caption: "STT",
+                    cellTemplate: function (container, options) {
+                        container.text(_grid.pageIndex() * _grid.pageSize() + options.rowIndex + 1);
+                    },
+                    alignment: 'center',
+                    width: "6%"
+                },
+                {
+                    dataField: "TenDonVi",
+                    caption: "Doanh nghiệp",
+                    alignment: 'left',
+                    width: "30%"
+                    //visible: false,
+                },
+                {
+                    dataField: "SoGiayPhep",
+                    caption: "Số giấy phép",
+                    alignment: 'center',
+                    width: "12%"
+                    //visible: false,
+                },
+                {
+                    dataField: "CapLan",
+                    caption: "Lần cấp",
+                    alignment: 'center',
+                    width: "12%"
+                    //visible: false,
+                },
+
+                {
+                    dataField: "NgayCap",
+                    caption: "Ngày cấp",
+                    alignment: 'center',
+                    dataType: 'date',
+                    format: 'dd/MM/yyyy',
+                    width: "14%"
+                    //visible: false,
+                },
+
+                {
+                    dataField: "NgayHetHan",
+                    caption: "Thời hạn",
+                    alignment: 'center',
+                    dataType: 'date',
+                    format: 'dd/MM/yyyy',
+                    width: "14%"
+                    //visible: false,
+                },
+
+                {
+                    caption: ".::.",
+                    width: '12%',
+                    alignment: 'center',
+                    cellTemplate: function (cellElement, cellInfo) {
+                        $('<i />').addClass('fa fa-search')
+                            //.text("Sửa")
+                            .on('dxclick', function (args) {
+                                ShowChiTietVanTai(cellInfo.data.DonViVanTaiID);
+                            })
+                            .appendTo(cellElement);
+                    },
+                    alignment: 'center'
+                },
+            ],
+            onRowPrepared: function (info) {
+                if (info.rowType == "header")
+                    info.rowElement.css('background', '#5599bc');
+                else {
+                    if (info.rowIndex % 2 != 0)
+                        info.rowElement.css('background', '#abb7b7');
+                }
+            },
+            onCellHoverChanged: function (hoverCell) {
+                if (hoverCell.eventType == 'mouseover')
+                    hoverCell.cellElement.addClass("hovered");
+                else
+                    hoverCell.cellElement.removeClass("hovered");
+            },
+            onContentReady: function (e) {
+                var visibleRowsCount = e.component.totalCount();
+                var totalCount = e.component.totalCount();
+                var pageSize = e.component.pageSize();
+                if (visibleRowsCount > pageSize)
+                    visibleRowsCount = pageSize;
+                e.component.option('pager.infoText', 'Hiển thị ' + visibleRowsCount + ' / ' +
+                    totalCount + ' dòng');
+            },
+            onRowPrepared: function (info) {
+                if (info.rowType != "header") {
+                    if (info.rowIndex % 2 != 0)
+                        info.rowElement.css('background', '#f9f9f9');
+                }
+            },
+            onExporting: async function (e) {
+                e.component.beginUpdate();
+                await Export();
+                e.component.option("selection.selectAllMode", "allPages");
+                e.component.selectAll();
+            },
+            onExported: function (e) {
+                e.component.option('dataSource', ListData);
+                e.component.endUpdate();
+            },
+            onFileSaving: function (e) {
+            }
+        }).dxDataGrid("instance");
+    };
+
+//Script show chi tiết của 1 đơn vị vận tải
+    async function ShowChiTietVanTai(DonViVanTaiID) {
+        console.log(DonViVanTaiID);
+        debugger
+        var url = $("#UrlChiTietVanTai").val();
+        window.location.href = url.replace('__id__', DonViVanTaiID);
+    };
+
+//Script load Combobox Loại hình kinh doanh
+    async function GETSelectLoaiHinhKD() {
+        var ListLoaiHinhKD = await $.ajax({
+            type: 'GET',
+            url: $("#UrlLoaiHinhKinhDoanh").val(),
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "text"
+        });
+        try {
+            var dnnViewResp = ListLoaiHinhKD;
+            dnnViewResp = dnnViewResp.substring(0, dnnViewResp.indexOf("<!DOCTYPE html>"));
+            var data = JSON.parse(dnnViewResp);
+
+            $('#loaihinhKD').dxSelectBox({
+                dataSource: data,
+                placeholder: '--- Chọn loại hình kinh doanh ---',
+                valueExpr: 'LoaiHinhKinhDoanhID',
+                displayExpr: 'TenLoaiHinhKinhDoanh',
+                onValueChanged: function (e) {
+                    //pTestBienLai_Loaiphi(e.value);
+                }
+            }).dxSelectBox('instance');
+        }
+        catch (e) {
+            console.log(e);
+        }
+    };
+
+    async function GETSelectLoaiHinhDoanhNghiep() {
+        var ListLoaiHinhDN = await $.ajax({
+            type: 'GET',
+            url: $("#UrlLoaiHinhDoanhNghiep").val(),
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "text"
+        });
+        try {
+            var dnnViewLoaiDN = ListLoaiHinhDN;
+            dnnViewLoaiDN = dnnViewLoaiDN.substring(0, dnnViewLoaiDN.indexOf("<!DOCTYPE html>"));
+            var dataLoaiDN = JSON.parse(dnnViewLoaiDN);
+
+            $('#loaihinhDoanhNghiep').dxSelectBox({
+                dataSource: dataLoaiDN,
+                placeholder: '--- Chọn loại hình Doanh nghiệp ---',
+                valueExpr: 'LoaiDoanhNghiepID',
+                displayExpr: 'TenLoaiDoanhNghiep',
+                onValueChanged: function (e) {
+                    //pTestBienLai_Loaiphi(e.value);
+                }
+            }).dxSelectBox('instance');
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function GETSelectQuanHuyen() {
+        var ListQuanHuyen = await $.ajax({
+            type: 'GET',
+            url: $("#UrlQuanHuyen").val(),
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "text"
+        });
+        try {
+            var dnnViewQuanHuyen = ListQuanHuyen;
+            dnnViewQuanHuyen = dnnViewQuanHuyen.substring(0, dnnViewQuanHuyen.indexOf("<!DOCTYPE html>"));
+            var dataQuanHuyen = JSON.parse(dnnViewQuanHuyen);
+
+            $('#quanhuyen').dxSelectBox({
+                dataSource: dataQuanHuyen,
+                placeholder: '--- Chọn Quận huyện ---',
+                valueExpr: 'QuanHuyenID',
+                displayExpr: 'TenQuanHuyen',
+                onValueChanged: function (e) {
+                    //pTestBienLai_Loaiphi(e.value);
+                }
+            }).dxSelectBox('instance');
+        }
+        catch (e) {
+            console.log(e);
+        }
+    };
+
+//Phần script kiểm tra click tìm kiếm nâng cao
+    async function ShowTimKiemNangCao() {
+        var flag = $("#checkShow").val();
+        if (flag == 0) {
+            $("#formTimKiem").show();
+            $("#checkShow").val(1);
+        }
+        else if (flag == 1) {
+            $("#formTimKiem").hide();
+            $("#checkShow").val(0);
+        }
+    }
+
+//==============Script load Datepicker============
+var tungay = new Date();
+var txtNgayCapTu = $("#ngaycaptu").dxDateBox({
+    width: "65%",
+    type: "date",
+    pickerType: "calendar",
+    displayFormat: 'dd/MM/yyyy',
+    value: tungay
+
+}).dxDateBox("instance");
+
+var denngay = new Date();
+var txtNgayCapDenNgay = $("#ngaycapdenngay").dxDateBox({
+    width: "65%",
+    type: "date",
+    pickerType: "calendar",
+    displayFormat: 'dd/MM/yyyy',
+    value: denngay
+
+}).dxDateBox("instance");
+
+var thoihantu = new Date();
+var txtThoiHanTu = $("#thoihantu").dxDateBox({
+    width: "65%",
+    type: "date",
+    pickerType: "calendar",
+    displayFormat: 'dd/MM/yyyy',
+    value: thoihantu
+
+}).dxDateBox("instance");
+
+var handenngay = new Date();
+var txtHanDenNgay = $("#handenngay").dxDateBox({
+    width: "65%",
+    type: "date",
+    pickerType: "calendar",
+    displayFormat: 'dd/MM/yyyy',
+    value: handenngay
+
+}).dxDateBox("instance");
+
+var ngaysinh = new Date();
+var txtNgaySinh = $("#ngaysinh").dxDateBox({
+    width: "65%",
+    type: "date",
+    pickerType: "calendar",
+    displayFormat: 'dd/MM/yyyy',
+    value: ngaysinh
+
+}).dxDateBox("instance");
+
+
+</script>
+

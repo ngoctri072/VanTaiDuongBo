@@ -1,0 +1,61 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
+@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<VanTaiDuongBo.Modules.VanTaiDuongBo.Models.ThongTinCoBan.ThongTinCoBanVanTai>
+@using DotNetNuke.Web.Mvc.Helpers
+
+<!-- Card body -->
+@if (Model != null)
+{
+    foreach (var thongtin in Model.ThongTinGiayPhep)
+    {
+        int countSTT = 1;
+        <div id="chitietLoaiHinhVanTai" class="divLoaiHinhVanTai">
+            <div class="card-body">
+                <p class="tieudeCap2">
+                    1.1. Giấy phép kinh doanh vận tải bằng xe ô tô
+                </p>
+                <p class="doanmota">
+                    Số @thongtin.SoGiayPhep cấp ngày @thongtin.NgayCap (cấp lần thứ @thongtin.CapLan),
+                    thời hạn của Giấy phép kinh doanh vận tải bằng xe ô tô có giá trị đến ngày @thongtin.NgayHetHan,
+                    kinh doanh các loại hình vận tải bằng xe ô tô:
+                </p>
+
+                @if (Model.LoaiHinhVanTai==null)
+                {
+                    <span>Không có thông tin loại hình vận tải</span>
+                }
+                else
+                {
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="10%" class="classcanhgiua">STT</th>
+                                <th width="65%" class="classcanhgiua">Loại hình kinh doanh</th>
+                                <th width="25%" class="classcanhgiua">Tổng số xe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var loaihinh in Model.LoaiHinhVanTai)
+                            {
+                                <tr>
+                                    <td class="classcanhgiua">@countSTT</td>
+                                    <td>@loaihinh.TenLoaiHinhKinhDoanh</td>
+                                    <td class="classcanhgiua">@loaihinh.SoLuongXe</td>
+                                </tr>
+                                countSTT = countSTT + 1;
+                            }
+                        </tbody>
+                    </table>
+                }
+                <p class="tieudeCap2">
+                    1.2. Địa chỉ: <strong>@thongtin.DiaChiKinhDoanh</strong>
+                </p>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div>
+        <p>Không có dữ liệu!</p>
+    </div>
+}

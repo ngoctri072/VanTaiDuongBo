@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4130D773-4930-4C21-9BCF-0C5244F585D0}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VanTaiDuongBo.Modules.VanTaiDuongBo</RootNamespace>
+    <AssemblyName>VanTaiDuongBo</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="API_Call, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\API_DUNGCHUNG\API_Service\API_Call\bin\Debug\API_Call.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke">
+      <HintPath>..\..\..\..\bin\DotNetNuke.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.Web">
+      <HintPath>..\..\..\..\bin\DotNetNuke.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.Web.Mvc">
+      <HintPath>..\..\..\..\bin\DotNetNuke.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\bin\System.Web.Helpers.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\bin\System.Web.Mvc.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\bin\System.Web.Razor.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\..\..\..\bin\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\bin\System.Web.WebPages.Deployment.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\bin\System.Web.WebPages.Razor.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_LocalResources\Settings.Designer.cs">
+      <AutoGen>False</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CallAPIProvider\GetResponseFromAPI.cs" />
+    <Compile Include="Components\FeatureController.cs" />
+    <Compile Include="Components\ItemManager.cs" />
+    <Compile Include="Components\PaginationSet.cs" />
+    <Compile Include="Controllers\QuanLyVanTaiController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="FunctionsAPI\SoLieuXe.cs" />
+    <Compile Include="FunctionsAPI\ThongTinGiayPhep.cs" />
+    <Compile Include="FunctionsAPI\ThongTinTuyenBenXe.cs" />
+    <Compile Include="FunctionsAPI\ThongTinViPham.cs" />
+    <Compile Include="Models\APIUrl.cs" />
+    <Compile Include="Models\DoanhNghiepVanTaiModel.cs" />
+    <Compile Include="Models\DonViVanTaiModel.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Models\LoaiHinhDoanhNghiepModel.cs" />
+    <Compile Include="Models\LoaiHinhKinhDoanhModel.cs" />
+    <Compile Include="Models\LoaiHinhKinhDoanhVanTaiPartialModel.cs" />
+    <Compile Include="Models\SoLieuXe\DanhSachXeModel.cs" />
+    <Compile Include="Models\SoLieuXe\jsonDanhSachXe.cs" />
+    <Compile Include="Models\SoLieuXe\ListXe_LoaiHinhXeModel.cs" />
+    <Compile Include="Models\SoLieuXe\LoaiHinhXe.cs" />
+    <Compile Include="Models\SoLieuXe\SoLieuXePartialModel.cs" />
+    <Compile Include="Models\ThongTinCoBan\ThongTinCoBanVanTai.cs" />
+    <Compile Include="Models\ThongTinGiayPhepVanTaiModel.cs" />
+    <Compile Include="Models\PagingModel.cs" />
+    <Compile Include="Models\QuanHuyenModel.cs" />
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\ThongTinViPham\ChiTietViPhamPartialModel.cs" />
+    <Compile Include="Models\ThongTinViPham\HanhViXuLyViPhamByXeModel.cs" />
+    <Compile Include="Models\ThongTinViPham\HanhViXuLyViPhamDetailModel.cs" />
+    <Compile Include="Models\ThongTinViPham\HanhViXuLyViPhamModel.cs" />
+    <Compile Include="Models\ThongTinViPham\HanhViXuLyViPhamPartialModel.cs" />
+    <Compile Include="Models\ThongTinViPham\ListPhuongTienModel.cs" />
+    <Compile Include="Models\ThongTinViPham\ListPhuongTienPartialModel.cs" />
+    <Compile Include="Models\ThongTinViPham\ThongTinChungModel.cs" />
+    <Compile Include="Models\ThongTinViPham\ThongTinViPhamPartialModel.cs" />
+    <Compile Include="Models\ThongTinViPham\VanVanXuLyViPhamByXeModel.cs" />
+    <Compile Include="Models\ThongTinViPham\ViPhamByLoaiHinhModel.cs" />
+    <Compile Include="Models\Tuyen_BenXe\KhoiBenXeModel.cs" />
+    <Compile Include="Models\Tuyen_BenXe\ListTuyen_ByBenXeModel.cs" />
+    <Compile Include="Models\Tuyen_BenXe\TuyenBenXePartialModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\css\bootstrap.min.css" />
+    <Content Include="Assets\css\ChiTietVanTai.css" />
+    <Content Include="Assets\css\SoLieuXe.css" />
+    <Content Include="Assets\css\StyleVanTai.css" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\dx.common.css" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\dx.light-compact.css" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\dx.light.css" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\dx.spa.css" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\generic.light.custom.css" />
+    <Content Include="Assets\DevExtreme\DevExtremeJs\dx.all.js" />
+    <Content Include="Assets\DevExtreme\DevExtremeJs\dx.aspnet.data.js" />
+    <Content Include="Assets\DevExtreme\DevExtremeJs\dx.aspnet.mvc.js" />
+    <Content Include="Assets\DevExtreme\DevExtremeJs\jszip.min.js" />
+    <Content Include="Assets\DevExtreme\font-awesome\.gitignore" />
+    <Content Include="Assets\DevExtreme\font-awesome\css\font-awesome.css" />
+    <Content Include="Assets\DevExtreme\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Assets\DevExtreme\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\DevExtreme\line-awesome\css\line-awesome-font-awesome.css" />
+    <Content Include="Assets\DevExtreme\line-awesome\css\line-awesome-font-awesome.min.css" />
+    <Content Include="Assets\DevExtreme\line-awesome\css\line-awesome.css" />
+    <Content Include="Assets\DevExtreme\line-awesome\css\line-awesome.min.css" />
+    <Content Include="Assets\DevExtreme\line-awesome\fonts\line-awesome.svg" />
+    <Content Include="Assets\icon\details_close.png" />
+    <Content Include="Assets\icon\details_open.png" />
+    <Content Include="Assets\script\donvivantai.js" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-toggle.min.css" />
+    <Content Include="Content\bootstrap-toggle.min.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Css\bootstrap-select.min.css" />
+    <Content Include="Content\Css\bootstrap.min.css" />
+    <Content Include="Content\Css\datepicker.css" />
+    <Content Include="Content\Css\jquery.dataTables.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Script\bootstrap.min.js" />
+    <Content Include="Content\Script\jquery.dataTables.min.js" />
+    <Content Include="Content\Script\jquery.min.js" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Documentation\Documentation.css" />
+    <Content Include="Documentation\Documentation.html" />
+    <Content Include="License.txt" />
+    <Content Include="module.css" />
+    <Content Include="ReleaseNotes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\bootstrap.css.map" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\icons\dxicons.ttf" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\icons\dxicons.woff" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\icons\dxiconsios.ttf" />
+    <Content Include="Assets\DevExtreme\DevExetemeCss\icons\dxiconsios.woff" />
+    <Content Include="Assets\DevExtreme\font-awesome\.bower.json" />
+    <Content Include="Assets\DevExtreme\font-awesome\.npmignore" />
+    <Content Include="Assets\DevExtreme\font-awesome\bower.json" />
+    <Content Include="Assets\DevExtreme\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\DevExtreme\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\DevExtreme\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\DevExtreme\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\core.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\extras.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\fixed-width.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\font-awesome.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\icons.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\larger.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\list.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\mixins.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\path.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\spinning.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\stacked.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\less\variables.less" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_core.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_extras.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_icons.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_larger.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_list.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_mixins.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_path.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_spinning.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_stacked.scss" />
+    <Content Include="Assets\DevExtreme\font-awesome\scss\_variables.scss" />
+    <Content Include="Assets\DevExtreme\fonts\Roboto-Bold.ttf" />
+    <Content Include="Assets\DevExtreme\fonts\Roboto-BoldItalic.ttf" />
+    <Content Include="Assets\DevExtreme\fonts\Roboto-Italic.ttf" />
+    <Content Include="Assets\DevExtreme\fonts\Roboto-Medium.ttf" />
+    <Content Include="Assets\DevExtreme\fonts\Roboto-MediumItalic.ttf" />
+    <Content Include="Assets\DevExtreme\fonts\Roboto-Regular.ttf" />
+    <Content Include="Assets\DevExtreme\line-awesome\fonts\line-awesome.eot" />
+    <Content Include="Assets\DevExtreme\line-awesome\fonts\line-awesome.ttf" />
+    <Content Include="Assets\DevExtreme\line-awesome\fonts\line-awesome.woff" />
+    <Content Include="Assets\DevExtreme\line-awesome\fonts\line-awesome.woff2" />
+    <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.0.0.js" />
+    <Content Include="Scripts\jquery-3.0.0.min.js" />
+    <Content Include="Scripts\jquery-3.0.0.slim.js" />
+    <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="VanTaiDuongBo.dnn">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BuildScripts\ModulePackage.targets" />
+    <Content Include="BuildScripts\MSBuild.Community.Tasks.Targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_LocalResources\Settings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\Edit.cshtml" />
+    <Content Include="Views\Settings\Settings.cshtml" />
+    <Content Include="Views\QuanLyVanTai\DonViVanTai.cshtml" />
+    <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.0.0.min.map" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\QuanLyVanTai\ChiTietVanTai.cshtml" />
+    <Content Include="Views\QuanLyVanTai\_SoLieuXePartial.cshtml" />
+    <Content Include="Views\QuanLyVanTai\_ThongTinCoBanPartial.cshtml" />
+    <Content Include="Views\QuanLyVanTai\_ChiTietTuyenPartial.cshtml" />
+    <Content Include="Views\QuanLyVanTai\_ThongTinViPhamChungPartial.cshtml" />
+    <Content Include="Views\QuanLyVanTai\_ThongTinViPhamChiTietPartial.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\Item.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\DanhMucDungChung\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>
+          </DevelopmentServerVPath>
+          <IISUrl>http://localhost/desktopmodules/mvc/VanTaiDuongBo</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <Extension>zip</Extension>
+    <DNNFileName>VanTaiDuongBo</DNNFileName>
+    <PackageName>VanTaiDuongBo</PackageName>
+  </PropertyGroup>
+  <Import Project="BuildScripts\ModulePackage.Targets" />
+  <Target Name="AfterBuild" DependsOnTargets="PackageModule">
+  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+</Project>
